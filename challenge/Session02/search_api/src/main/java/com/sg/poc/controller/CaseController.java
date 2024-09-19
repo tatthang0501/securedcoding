@@ -1,9 +1,11 @@
 package com.sg.poc.controller;
 
 import com.sg.poc.domain.dto.ApiResponse;
-import com.sg.poc.domain.dto.IngestRequest;
 import com.sg.poc.domain.dto.SearchRequest;
 import com.sg.poc.service.LawInjuryCaseService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +21,12 @@ public class CaseController {
   private final LawInjuryCaseService injuryCaseService;
 
   @GetMapping(value = "/cases")
-  public ResponseEntity<ApiResponse<Object>> findById(@RequestParam("id") Integer id) {
+  public ResponseEntity<ApiResponse<Object>> findById(@RequestParam("id") @Min(1) @NotNull Integer id) {
     return ResponseEntity.ok(ApiResponse.success(injuryCaseService.findById(id)));
   }
 
   @PostMapping(value = "/search/cases")
-  public ResponseEntity<ApiResponse<Object>> search(@RequestBody SearchRequest searchRequest) {
+  public ResponseEntity<ApiResponse<Object>> search(@RequestBody @NotNull @Valid SearchRequest searchRequest) {
     return ResponseEntity.ok(ApiResponse.success(injuryCaseService.search(searchRequest)));
   }
 

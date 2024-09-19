@@ -3,6 +3,7 @@ package com.sg.poc.controller;
 import com.sg.poc.domain.dto.ApiResponse;
 import com.sg.poc.domain.dto.IngestRequest;
 import com.sg.poc.service.LawInjuryCaseService;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class LanguageProcessorController {
   private final LawInjuryCaseService injuryCaseService;
 
   @PostMapping(value = "/npl")
-  public ResponseEntity<ApiResponse<Object>> ingest(@RequestBody IngestRequest request) {
+  public ResponseEntity<ApiResponse<Object>> ingest(@RequestBody @NotNull IngestRequest request) {
     return ResponseEntity.ok(ApiResponse.success(injuryCaseService.ingest(request)));
   }
 }
